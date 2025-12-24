@@ -10,14 +10,14 @@ type Props = {
 export const PeopleTable: React.FC<Props> = ({ people }) => {
   const { slug } = useParams();
 
-  const preparedPeople = [...people].map((person, index, all) => {
+  const preparedPeople = people.map((person, index, all) => {
     return {
       ...person,
       mother: person.motherName
-        ? (all.find(p => p.name === person.motherName) ?? undefined)
+        ? all.find(p => p.name === person.motherName)
         : undefined,
       father: person.fatherName
-        ? (all.find(p => p.name === person.fatherName) ?? undefined)
+        ? all.find(p => p.name === person.fatherName)
         : undefined,
     };
   });
@@ -59,7 +59,7 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
                 <PersonLink person={person.mother} />
               </td>
             ) : (
-              <td>{person.motherName ?? '-'}</td>
+              <td>{person.motherName || '-'}</td>
             )}
 
             {person.father ? (
